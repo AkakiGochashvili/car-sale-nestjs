@@ -45,35 +45,22 @@ export class AuthService {
 
 		return access_token;
 	}
-	async validateUser(email: string, password: string): Promise<User> {
+
+	async validateUser(email: string, pass: string): Promise<User> {
 		const user = await this.usersService.findOne({ email }, 'POSITIVE');
-		if (user && user.password === password) {
+
+		const match_password = await bcrypt.compare(pass, user.password);
+
+		if (user && match_password) {
 			return user;
 		}
 		return null;
 	}
 
-	async login(user: User): Promise<{ access_token: string }> {
-		// const payload = { username: user.username, sub: user.userId };
-		// return {
-		// 	access_token: this.jwtService.sign(payload)
-		// };
-
-		const payload = {
-			email: user.email,
-			sub: user.id
-		};
-
+	async login(user: User) {
+		const payload = { userId: user.id };
 		return {
 			access_token: this.jwtService.sign(payload)
 		};
-	}
-
-	async verify(token: string): Promise<User> {
-		const decoded = this.jwtService.verify(token, { secret: '2228754d90aa7d5a51ed24ce6794b2a1b52c8d36d2e057fb78534048777ceb8f' });
-
-		const user = this.usersService.findOne({ email: decoded.email }, 'POSITIVE');
-
-		return user;
 	}
 }

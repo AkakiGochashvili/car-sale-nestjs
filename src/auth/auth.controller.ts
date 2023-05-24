@@ -1,9 +1,8 @@
-import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { AuthDto } from 'src/auth/dtos/auth.dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger/dist';
-import { User } from 'src/users/user.entity';
-import { Request } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -20,5 +19,11 @@ export class AuthController {
 	async signin(@Body() body: AuthDto) {
 		const response = await this.authService.signin(body);
 		return { access_token: response };
+	}
+
+	@UseGuards(AuthGuard('local'))
+	@Post('login')
+	async login(@Request() req) {
+		return await this.authService.login(req.user);
 	}
 }

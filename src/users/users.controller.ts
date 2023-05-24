@@ -1,12 +1,14 @@
-import { Controller, Body, Get, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Body, Get, Param, Patch, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthDto } from 'src/auth/dtos/auth.dto';
+import { AuthGuard } from '@nestjs/passport';
 
-@JwtProtect()
+// @JwtProtect()
+@UseGuards(AuthGuard('jwt'))
 @Serialize(UserDto)
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -39,5 +41,10 @@ export class UsersController {
 	@Delete(':id')
 	deleteUser(@Param('id') id: string) {
 		return this.usersService.remove(parseInt(id));
+	}
+
+	@Delete()
+	deleteAllUsers() {
+		return this.usersService.clear();
 	}
 }
