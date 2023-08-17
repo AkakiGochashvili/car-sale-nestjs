@@ -1,14 +1,14 @@
 import { Controller, Body, Get, Param, Patch, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Serialize } from 'src/common/interceptors/serialize.interceptor';
+import { Serialize } from '../../src/common/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthDto } from 'src/auth/dtos/auth.dto';
+import { AuthDto } from '../../src/auth/dtos/auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-// @JwtProtect()
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
+@JwtProtect()
 @Serialize(UserDto)
 @ApiTags('Users')
 @ApiBearerAuth()

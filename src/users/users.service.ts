@@ -1,9 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthDto } from 'src/auth/dtos/auth.dto';
-
+import { AuthDto } from '../../src/auth/dtos/auth.dto';
 @Injectable()
 export class UsersService {
 	constructor(@InjectRepository(User) private repository: Repository<User>) {}
@@ -16,7 +15,7 @@ export class UsersService {
 		return user;
 	}
 
-	async findOne(query: Object, searchType: 'POSITIVE' | 'NEGATIVE' | 'PASSIVE') {
+	async findOne(query: FindOptionsWhere<User>, searchType: 'POSITIVE' | 'NEGATIVE' | 'PASSIVE') {
 		const user = await this.repository.findOneBy(query);
 
 		if (searchType === 'POSITIVE' && !user) {

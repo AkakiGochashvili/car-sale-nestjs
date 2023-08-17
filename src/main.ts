@@ -1,12 +1,14 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 import { GlobalInterceptor } from './common/interceptors/global.interceptor';
-import { DocumentBuilder } from '@nestjs/swagger';
-import { SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger/dist';
+import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+
+	const configService = app.get(ConfigService);
 
 	app.useGlobalPipes(
 		new ValidationPipe({
@@ -29,6 +31,8 @@ async function bootstrap() {
 	const document = SwaggerModule.createDocument(app, config, options);
 	SwaggerModule.setup('api', app, document);
 
-	await app.listen(5003);
+	const port = configService.get('PORT');
+
+	await app.listen(port);
 }
 bootstrap();
