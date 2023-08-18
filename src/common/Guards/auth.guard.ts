@@ -3,6 +3,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, UseGu
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { UsersService } from '../../users/users.service';
+import { findOneSearchTypes } from 'src/users/enums/find-one-search-types.enum';
 
 export function JwtProtect() {
 	return UseGuards(AuthGuard);
@@ -23,7 +24,7 @@ export class AuthGuard implements CanActivate {
 				secret: String(this.configService.get('JWT_SECRET'))
 			})) as { id: number; iat: number; exp: number };
 
-			const user = await this.usersService.findOne({ id: payload.id }, 'POSITIVE');
+			const user = await this.usersService.findOne({ id: payload.id }, findOneSearchTypes.POSITIVE);
 
 			request['user'] = user;
 		} catch {
