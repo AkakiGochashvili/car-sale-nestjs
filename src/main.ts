@@ -10,12 +10,6 @@ async function bootstrap() {
 
 	const configService = app.get(ConfigService);
 
-	app.useGlobalPipes(
-		new ValidationPipe({
-			whitelist: true
-		})
-	);
-
 	app.useGlobalInterceptors(new GlobalInterceptor());
 
 	const config = new DocumentBuilder()

@@ -3,7 +3,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, UseGu
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { UsersService } from '../../users/users.service';
-import { findOneSearchTypes } from 'src/users/enums/find-one-search-types.enum';
+import { findOneSearchTypes } from '../../users/enums/find-one-search-types.enum';
 
 export function JwtProtect() {
 	return UseGuards(AuthGuard);
