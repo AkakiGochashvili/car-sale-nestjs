@@ -4,14 +4,15 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthDto } from '../auth/dtos/auth.dto';
 import { findOneSearchTypes } from './enums/find-one-search-types.enum';
+
 @Injectable()
 export class UsersService {
 	constructor(@InjectRepository(User) private repository: Repository<User>) {}
 
 	async create(user_data: AuthDto) {
-		const pre_user = this.repository.create(user_data);
+		const user_instance = this.repository.create(user_data);
 
-		const user = await this.repository.save(pre_user);
+		const user = await this.repository.save(user_instance);
 
 		return user;
 	}

@@ -14,7 +14,6 @@ import { RegistrationStrategy } from '../common/strategies/registration.strategy
 	exports: [AuthService],
 	providers: [AuthService, LocalStrategy, JwtStrategy, RegistrationStrategy],
 	imports: [
-		UsersModule,
 		PassportModule,
 		ConfigModule.forRoot(),
 		JwtModule.register({
