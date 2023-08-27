@@ -1,7 +1,7 @@
 import { Controller, Body, Get, Param, Patch, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
-import { UserDto } from './dtos/user.dto';
+import { UserResponseDto } from './dtos/user-response.dto';
 import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthDto } from '../auth/dtos/auth.dto';
@@ -9,7 +9,7 @@ import { findOneSearchTypes } from './enums/find-one-search-types.enum';
 
 // @UseGuards(AuthGuard('jwt'))
 @JwtProtect()
-@Serialize(UserDto)
+@Serialize(UserResponseDto)
 @ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
