@@ -1,8 +1,10 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { createReportDto } from './dtos/create-repost.dto';
 import { ReportsService } from './reports.service';
 import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/user.entity';
+import { CurrentUser } from '../common/decorators/user.decorator';
+import { createReportDto } from './dtos/create-report.dto';
 
 @ApiTags('Reports')
 @ApiBearerAuth()
@@ -12,7 +14,7 @@ export class ReportsController {
 
 	@JwtProtect()
 	@Post()
-	createRepost(@Body() body: createReportDto) {
-		return this.reportsService.create(body);
+	createReport(@Body() body: createReportDto, @CurrentUser() user: User) {
+		return this.reportsService.create(body, user);
 	}
 }

@@ -23,7 +23,7 @@ export class AuthService {
 			},
 
 			{
-				expiresIn: '15m',
+				expiresIn: '1h',
 				secret
 			}
 		);
