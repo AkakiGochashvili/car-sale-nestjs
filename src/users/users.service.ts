@@ -51,9 +51,13 @@ export class UsersService {
 		const user = await this.findOne({ id }, findOneSearchTypes.POSITIVE);
 
 		await this.repository.remove(user);
+
+		return true;
 	}
 
 	async clear() {
 		await this.repository.clear();
+
+		return true;
 	}
 }

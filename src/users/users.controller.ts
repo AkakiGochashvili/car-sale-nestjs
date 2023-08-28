@@ -19,12 +19,14 @@ export class UsersController {
 	@Get(':id')
 	async findUser(@Param('id') id: string) {
 		const response = await this.usersService.findOne({ id: parseInt(id) }, findOneSearchTypes.POSITIVE);
+
 		return { data: response };
 	}
 
 	@Get()
 	async findUsers() {
 		const response = await this.usersService.find();
+
 		return { data: response };
 	}
 
@@ -35,6 +37,7 @@ export class UsersController {
 		@Body() body: AuthDto
 	) {
 		const response = await this.usersService.update(parseInt(id), body);
+
 		return { data: response };
 	}
 
