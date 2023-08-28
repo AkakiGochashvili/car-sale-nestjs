@@ -6,8 +6,10 @@ import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthDto } from '../auth/dtos/auth.dto';
 import { findOneSearchTypes } from './enums/find-one-search-types.enum';
+import { AdminProtect } from '../common/Guards/admin.guard';
 
 // @UseGuards(AuthGuard('jwt'))
+@AdminProtect()
 @JwtProtect()
 @Serialize(UserResponseDto)
 @ApiTags('Users')

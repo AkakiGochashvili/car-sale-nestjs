@@ -14,19 +14,8 @@ export class AuthService {
 	constructor(private usersService: UsersService, private jwtService: JwtService, private config: ConfigService) {}
 
 	async getSignedJWT(id: number) {
-		const secret = await this.config.get('JWT_SECRET');
-
-		const access_token = await this.jwtService.signAsync(
-			{
-				sub: id,
-				email: 123
-			},
-
-			{
-				expiresIn: '1h',
-				secret
-			}
-		);
+		const access_token = await this.jwtService.signAsync({ id });
+		
 		return access_token;
 	}
 
