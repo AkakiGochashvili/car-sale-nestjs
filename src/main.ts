@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
@@ -20,7 +19,7 @@ async function bootstrap() {
 		.build();
 
 	const options: SwaggerDocumentOptions = {
-		operationIdFactory: (controllerKey: string, methodKey: string) => methodKey
+		operationIdFactory: (_controllerKey: string, methodKey: string) => methodKey
 	};
 	const document = SwaggerModule.createDocument(app, config, options);
 	SwaggerModule.setup('api', app, document);

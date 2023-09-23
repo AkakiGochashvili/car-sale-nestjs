@@ -27,9 +27,9 @@ export class AuthController {
 		return await this.authService.login(request.user);
 	}
 
-	@UseGuards(AuthGuard('registration'))
-	@Post('registration')
-	async registration(@Request() request, @Body() body: AuthDto) {
-		return await this.authService.login(request.user);
-	}
+	// @UseGuards(AuthGuard('registration'))
+	// @Post('registration')
+	// async registration(@Request() request, @Body() body: AuthDto) {
+	// 	return await this.authService.login(request.user);
+	// }
 }

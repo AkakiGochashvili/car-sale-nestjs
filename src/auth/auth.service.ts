@@ -1,21 +1,18 @@
-/** @format */
-
 import { UsersService } from '../users/users.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt/dist';
 import { AuthDto } from '../auth/dtos/auth.dto';
-import { ConfigService } from '@nestjs/config';
-import { findOneSearchTypes } from '../users/enums/find-one-search-types.enum';
+import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class AuthService {
-	constructor(private usersService: UsersService, private jwtService: JwtService, private config: ConfigService) {}
+	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
 	async getSignedJWT(id: number) {
 		const access_token = await this.jwtService.signAsync({ id });
-		
+
 		return access_token;
 	}
 

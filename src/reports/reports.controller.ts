@@ -8,7 +8,7 @@ import { createReportDto } from './dtos/create-report.dto';
 import { ReportResponseDto } from './dtos/report-response.dto';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { approveReportDto } from './dtos/approve-report.dto';
-import { findOneSearchTypes } from '../users/enums/find-one-search-types.enum';
+import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 
 @ApiTags('Reports')
 @ApiBearerAuth()

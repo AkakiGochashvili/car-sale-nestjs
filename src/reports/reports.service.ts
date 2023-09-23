@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { createReportDto } from './dtos/create-report.dto';
 import { User } from '../users/user.entity';
-import { findOneSearchTypes } from '../users/enums/find-one-search-types.enum';
+import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 
 @Injectable()
 export class ReportsService {

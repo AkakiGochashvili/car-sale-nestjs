@@ -3,7 +3,7 @@ import { FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthDto } from '../auth/dtos/auth.dto';
-import { findOneSearchTypes } from './enums/find-one-search-types.enum';
+import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 
 @Injectable()
 export class UsersService {

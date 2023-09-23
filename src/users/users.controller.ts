@@ -1,16 +1,14 @@
-import { Controller, Body, Get, Param, Patch, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Body, Get, Param, Patch, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { UserResponseDto } from './dtos/user-response.dto';
-import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthDto } from '../auth/dtos/auth.dto';
-import { findOneSearchTypes } from './enums/find-one-search-types.enum';
-import { AdminProtect } from '../common/Guards/admin.guard';
+import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums/role.enum';
 
-// @UseGuards(AuthGuard('jwt'))
-@AdminProtect()
-@JwtProtect()
+@Roles(Role.ADMIN)
 @Serialize(UserResponseDto)
 @ApiTags('Users')
 @ApiBearerAuth()

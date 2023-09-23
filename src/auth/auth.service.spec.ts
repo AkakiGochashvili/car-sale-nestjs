@@ -7,7 +7,7 @@ import { User } from '../users/user.entity';
 import { AuthDto } from './dtos/auth.dto';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { BadRequestException } from '@nestjs/common';
-import { findOneSearchTypes } from './../users/enums/find-one-search-types.enum';
+import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 
 describe('AuthService', () => {
 	let service: AuthService;
@@ -17,11 +17,12 @@ describe('AuthService', () => {
 		const users: User[] = [];
 		fakeUsersService = {
 			findOne: (query: FindOptionsWhere<User>, searchType: findOneSearchTypes) => {
-				// const user = users.filter(user =>user[Object.keys(query)[0]] === Object.values(query)[0])
 				let filtered_users: User[] = users;
+
 				for (const query_item in query) {
 					filtered_users === filtered_users.filter((user) => user[query_item] === query[query_item]);
 				}
+
 				return Promise.resolve(filtered_users[0]);
 			},
 
