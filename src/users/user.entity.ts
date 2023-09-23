@@ -12,8 +12,8 @@ export class User {
 	@Column()
 	password: string;
 
-	@Column({ default: false })
-	admin: boolean;
+	@Column({ enum: ['ADMIN', 'USER'], default: 'USER' })
+	role: string;
 
 	@OneToMany(() => Report, (report) => report.user)
 	reports: Report[];
