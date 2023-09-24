@@ -7,12 +7,10 @@ const clc = require('cli-color');
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-	private logger = new Logger('HTTP');
-
 	use(request: Request, response: Response, next: NextFunction): void {
 		const { ip, method, baseUrl: url } = request;
 
-		const role = (request.user as User)?.role ? (request.user as User)?.role : 'UNAUTHORIZED';
+		const role = (request?.user as User)?.role ? (request?.user as User)?.role : 'UNAUTHORIZED';
 
 		const startAt = Date.now();
 
@@ -25,7 +23,23 @@ export class LoggerMiddleware implements NestMiddleware {
 
 			const response_time = Date.now() - startAt;
 
-			console.log(clc.cyan(`[${role}]   ${method}   ${url}   ${statusCode}   ${response_time}ms  -  ${contentLength}  ${userAgent} ${ip}`));
+			let status_code_log: string;
+
+			if (statusCode >= 200 && statusCode < 300) {
+				status_code_log = clc.green(`${statusCode}`);
+			}
+
+			if (statusCode >= 400 && statusCode < 400) {
+				status_code_log = clc.yellow(statusCode);
+			}
+
+			if (statusCode >= 400) {
+				status_code_log = clc.red(statusCode);
+			}
+
+			console.log(
+				clc.cyan(`[${role}]   ${method}   ${url}   ${status_code_log || statusCode}   ${response_time}ms  -  ${contentLength}  ${userAgent} ${ip}`)
+			);
 		});
 
 		next();

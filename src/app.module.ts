@@ -9,7 +9,7 @@ import { Report } from './reports/report.entity';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './common/middlewares/jwt.middleware';
 import { RolesGuard } from './common/Guards/roles.guard';
-import { LoggerMiddleware } from './common/middlewares/logger';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
 	imports: [
