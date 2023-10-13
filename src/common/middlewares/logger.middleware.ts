@@ -38,7 +38,11 @@ export class LoggerMiddleware implements NestMiddleware {
 			}
 
 			console.log(
-				clc.cyan(`[${role}]   ${method}   ${url}   ${status_code_log || statusCode}   ${response_time}ms  -  ${contentLength}  ${userAgent} ${ip}`)
+				clc.cyan(
+					`${clc.yellow(`[${role}]`)}   ${method}   ${url}   ${
+						status_code_log || statusCode
+					}   ${response_time}ms  -  ${contentLength}      ${userAgent} ${ip}`
+				)
 			);
 		});
 

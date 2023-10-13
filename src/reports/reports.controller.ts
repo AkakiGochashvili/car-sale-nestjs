@@ -12,10 +12,16 @@ import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 
 @ApiTags('Reports')
 @ApiBearerAuth()
-@Serialize(ReportResponseDto)
 @Controller('reports')
 export class ReportsController {
 	constructor(private reportsService: ReportsService) {}
+
+	@Get()
+	async findReports() {
+		const response = await this.reportsService.find();
+
+		return { data: response };
+	}
 
 	@Get(':id')
 	async findReport(@Param('id') id: string) {
@@ -24,6 +30,7 @@ export class ReportsController {
 		return { data: response };
 	}
 
+	@Serialize(ReportResponseDto)
 	@JwtProtect()
 	@Post()
 	async createReport(@Body() body: createReportDto, @CurrentUser() user: User) {

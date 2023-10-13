@@ -9,6 +9,11 @@ import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
 @Injectable()
 export class ReportsService {
 	constructor(@InjectRepository(Report) private repository: Repository<Report>) {}
+	async find() {
+		const reports = await this.repository.find();
+
+		return reports;
+	}
 
 	async findOne(query: FindOptionsWhere<Report>, searchType: findOneSearchTypes) {
 		const report = await this.repository.findOneBy(query);
