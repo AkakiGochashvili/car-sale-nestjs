@@ -1,15 +1,15 @@
 import { MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common';
 import { APP_GUARD, APP_PIPE } from '@nestjs/core';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
-import { Report } from './reports/report.entity';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './common/middlewares/jwt.middleware';
 import { RolesGuard } from './common/Guards/roles.guard';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+
+const DBConfig = require('../../orm.config');
 
 @Module({
 	imports: [
@@ -20,17 +20,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 		UsersModule,
 		AuthModule,
 		ReportsModule,
-		TypeOrmModule.forRootAsync({
-			inject: [ConfigService],
-			useFactory: (config: ConfigService) => {
-				return {
-					type: 'sqlite',
-					database: config.get('DB_NAME'),
-					synchronize: true,
-					entities: [User, Report]
-				};
-			}
-		})
+		TypeOrmModule.forRoot(DBConfig)
 	],
 	providers: [
 		{

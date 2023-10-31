@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param, Delete, Get } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Delete, Get, Query } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { JwtProtect } from '../common/Guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -9,6 +9,9 @@ import { ReportResponseDto } from './dtos/report-response.dto';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { approveReportDto } from './dtos/approve-report.dto';
 import { findOneSearchTypes } from '../common/enums/find-one-search-types.enum';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role.enum';
+import { GetEstimateDto } from './dtos/get-estimate.dto';
 
 @ApiTags('Reports')
 @ApiBearerAuth()
@@ -30,7 +33,14 @@ export class ReportsController {
 		return { data: response };
 	}
 
+	@Get('/get/estimate')
+	getEstimate(@Query() query: GetEstimateDto) {
+		// return this.reportsService.createEstimate(query);
+		console.log(query);
+	}
+
 	@Serialize(ReportResponseDto)
+	@Roles(Role.ADMIN)
 	@JwtProtect()
 	@Post()
 	async createReport(@Body() body: createReportDto, @CurrentUser() user: User) {
