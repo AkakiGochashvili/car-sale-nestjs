@@ -1,15 +1,20 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
+import dotenv from 'dotenv';
 
 const DBConfig = {
-	synchronize: false,
 	migrations: ['migrations/*.js']
 };
+
+dotenv.config({
+	path: `${__dirname}/.env`
+});
 
 switch (process.env.NODE_ENV) {
 	case 'development':
 		Object.assign(DBConfig, {
 			type: 'sqlite',
 			database: 'db.sqlite',
+			synchronize: true,
 			entities: ['**/*.entity.js']
 		});
 		break;
@@ -18,13 +23,15 @@ switch (process.env.NODE_ENV) {
 			type: 'sqlite',
 			database: 'test.sqlite',
 			entities: ['**/*.entity.ts'],
+			synchronize: false,
 			migrationsRun: true
 		});
 		break;
 	case 'production':
 		Object.assign(DBConfig, {
+			synchronize: false,
 			type: 'postgres',
-			url: 'postgres://default:xO3qu7cipQNy@ep-billowing-wood-48312627.us-east-1.postgres.vercel-storage.com:5432/verceldb',
+			url: process.env.DATABASE_URL,
 			migrationsRun: true,
 			entities: ['**/*.entity.js'],
 			ssl: true,
