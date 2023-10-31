@@ -10,7 +10,6 @@ import { RolesGuard } from './common/Guards/roles.guard';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 const DBConfig = require('../orm.config');
-console.log(DBConfig);
 
 @Module({
 	imports: [

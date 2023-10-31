@@ -22,11 +22,14 @@ switch (process.env.NODE_ENV) {
 	case 'production':
 		Object.assign(DBConfig, {
 			type: 'postgres',
-			url: process.env.DATABASE_URL,
+			url: 'postgres://default:xO3qu7cipQNy@ep-billowing-wood-48312627.us-east-1.postgres.vercel-storage.com:5432/verceldb',
 			migrationsRun: true,
 			entities: ['**/*.entity.js'],
-			ssl: {
-				rejectUnauthorized: false
+			ssl: true,
+			extra: {
+				ssl: {
+					rejectUnauthorized: false
+				}
 			}
 		});
 		break;
