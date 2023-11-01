@@ -30,6 +30,10 @@
 
 [Cars nestJS](https://cars-nestjs.vercel.app)
 
+## Postman documentation
+
+[DOCUMENTATION](https://documenter.getpostman.com/view/30426873/2s9YXcdQar)
+
 ## Installation
 
 ```bash
